@@ -55,13 +55,6 @@ const (
 	// ddcutil feature subsets: LUT
 	RemoteProcedureCall writeonly = _RemoteProcedureCall
 
-	// TVChannelUpDown
-	// Increment (1) or decrement (2) television channel
-	// MCCS versions: 2.0, 2.1, 3.0, 2.2
-	// MCCS specification groups: Miscellaneous
-	// ddcutil feature subsets: TV
-	TVChannelUpDown writeonly = _TVChannelUpDown
-
 	// AuxiliaryDisplayData
 	// Sets contents of auxiliary display device
 	// MCCS versions: 2.0, 2.1, 3.0, 2.2
