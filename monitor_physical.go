@@ -119,15 +119,15 @@ func (m *PhysicalMonitor) call(name string, args ...uintptr) error {
 // If vcpCode specifies a non-continuous VCP code, the value received in this parameter is undefined.
 // This parameter can be NULL.
 func (m *PhysicalMonitor) GetVCPFeatureAndVCPFeatureReply(coder vcp.Coder) (current int, maxValue int, err error) {
-	//type vcpCodeType int
-	//const (
+	// type vcpCodeType int
+	// const (
 	//	// Momentary VCP code. Sending a command of this type causes the monitor to initiate a self-timed operation
 	//	// and then revert to its original state. Examples include display tests and degaussing.
 	//	Momentary vcpCodeType = iota
 	//	// SetParameter Set Parameter VCP code.
 	//	// Sending a command of this type changes some aspect of the monitor's operation.
 	//	SetParameter
-	//)
+	// )
 
 	// [out] pvct
 	//
