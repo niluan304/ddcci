@@ -1,6 +1,6 @@
 ## DDCCI
 
-`ddcci` is a go package that calls the interface provided by the operating system and interacts with the display through the `DDC/CI` display communication standard protocol.
+`ddcci` is a go library that calls the interface provided by the operating system and interacts with the display through the `DDC/CI` display communication standard protocol.
 - Get the description, driver information, and current location of the monitor
 - Get/Set the brightness, contrast, color temperature, or other adjustable parameters of the monitor
 - Modify the power mode of the monitor (requires support from the monitor itself)
