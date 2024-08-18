@@ -2,7 +2,7 @@ default_stages: [ commit ]
 fail_fast: true
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.1.0
+    rev: v4.6.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
@@ -12,12 +12,18 @@ repos:
       - id: commitlint
         stages: [ commit-msg ]
         additional_dependencies: [ '@commitlint/config-conventional' ]
+
   - repo: https://github.com/tekwizely/pre-commit-golang
-    rev: master
+    rev: v1.0.0-rc.1
     hooks:
       - id: go-mod-tidy
-      - id: go-vet-mod
-      - id: go-revive-mod
-      - id: go-staticcheck-mod
-
-
+      - id: my-cmd
+        name: gofumpt
+        alias: gofumpt
+        args: [ gofumpt, -w, . ]
+      - id: my-cmd
+        name: gci
+        alias: gci
+        args: [ gci, write, --skip-generated, -s, standard, -s, "prefix(golang.org/x)", -s, default, -s, localmodule, --custom-order, . ]
+      - id: go-fumpt
+      - id: golangci-lint-mod

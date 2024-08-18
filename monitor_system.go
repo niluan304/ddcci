@@ -108,7 +108,7 @@ func NewSystemMonitors() ([]SystemMonitor, error) {
 		handle0,
 	)
 	if !errors.Is(errno, errno0) {
-		return nil, errors.Join(errno, fmt.Errorf("get system monitors"))
+		return nil, errors.Join(errno, errors.New("get system monitors"))
 	}
 	return monitors, nil
 }
