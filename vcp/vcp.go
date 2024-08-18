@@ -7,13 +7,14 @@ type VCP struct {
 	value int
 }
 
-func NewVCP(code int, value int) VCP { return VCP{code: code, value: value} }
+func NewVCP(code, value int) VCP { return VCP{code: code, value: value} }
 
 func (v VCP) Code() int  { return v.code }
 func (v VCP) Value() int { return v.value }
 
-// https://www.hattelandtechnology.com/hubfs/pdf/misc/doc101681-1_8_and_13inch_dis_ddc_control.pdf
-// https://www.ddcutil.com/vcpinfo_output/
+// [ddcutil vcpinfo] provides a quick list of all features defined in the Monitor
+//
+// [ddcutil vcpinfo]: https://www.ddcutil.com/vcpinfo_output/
 const (
 	_Degauss                                  = 0x01
 	_NewControlValue                          = 0x02
