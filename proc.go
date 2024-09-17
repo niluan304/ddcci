@@ -2,14 +2,18 @@
 
 package ddcci
 
-// https://docs.microsoft.com/en-us/windows/win32/api/_monitor/
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://docs.microsoft.com/en-us/windows/win32/api/_monitor/
 const (
 	EnumDisplayMonitors = "EnumDisplayMonitors"
 	GetMonitorInfoA     = "GetMonitorInfoA"
 	GetMonitorInfoW     = "GetMonitorInfoW"
 )
 
-// https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 const (
 	GetMonitorBrightness          = "GetMonitorBrightness"
 	GetMonitorCapabilities        = "GetMonitorCapabilities"
@@ -27,15 +31,18 @@ const (
 	SaveCurrentMonitorSettings         = "SaveCurrentMonitorSettings"
 )
 
-// https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
+// See microsoft-windows [doc]
 // Set Monitor With HighLevel
+//
+// [doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 const (
 	SetMonitorBrightness = "SetMonitorBrightness"
 	SetMonitorContrast   = "SetMonitorContrast"
 )
 
-// https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 // Set Monitor With HighLevel
+//
+// See microsoft-windows [doc]
 //
 // Deprecated:
 // cannot use preset values because Golang does not support the 'enum' type.
@@ -43,6 +50,8 @@ const (
 // eg:
 // compared to *PhysicalMonitor .call(SetMonitorColorTemperature, 4000K),
 // it is better: *PhysicalMonitor.SetVCPFeature(vcp.SelectColorPreset.Set4000K)
+//
+// [doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 const (
 	SetMonitorColorTemperature    = "SetMonitorColorTemperature"
 	SetMonitorDisplayAreaPosition = "SetMonitorDisplayAreaPosition"
@@ -51,7 +60,9 @@ const (
 	SetMonitorRedGreenOrBlueGain  = "SetMonitorRedGreenOrBlueGain"
 )
 
-// https://learn.microsoft.com/en-us/windows/win32/api/lowlevelmonitorconfigurationapi/
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/lowlevelmonitorconfigurationapi/
 const (
 	GetCapabilitiesStringLength             = "GetCapabilitiesStringLength"
 	CapabilitiesRequestAndCapabilitiesReply = "CapabilitiesRequestAndCapabilitiesReply"
@@ -62,7 +73,9 @@ const (
 	SetVCPFeature                   = "SetVCPFeature"
 )
 
-// https://learn.microsoft.com/en-us/windows/win32/api/physicalmonitorenumerationapi/
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/physicalmonitorenumerationapi/
 const (
 	DestroyPhysicalMonitor                          = "DestroyPhysicalMonitor"
 	DestroyPhysicalMonitors                         = "DestroyPhysicalMonitors"

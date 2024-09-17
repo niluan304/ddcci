@@ -1,21 +1,24 @@
-package ddcci
+//go:build windows
+
+package ddcci_test
 
 import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
+	"github.com/niluan304/ddcci"
 )
 
 func TestSystemMonitor_GetNumberOfPhysicalMonitorsFromHMONITOR(t *testing.T) {
-	a := assert.New(t)
-
-	monitors, err := NewSystemMonitors()
-	a.Nil(err)
+	monitors, err := ddcci.NewSystemMonitors()
+	require.NoError(t, err)
 
 	for i, monitor := range monitors {
 		num, err := monitor.GetNumberOfPhysicalMonitorsFromHMONITOR()
-		a.Nil(err)
+		require.NoError(t, err)
 
-		a.Equal(i+1, num)
+		assert.Equal(t, i+1, num)
 	}
 }

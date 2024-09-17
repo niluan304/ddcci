@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/niluan304/ddcci"
 	"github.com/niluan304/ddcci/vcp"
@@ -114,12 +115,12 @@ func TestPhysicalMonitor_GetVCPFeatureAndVCPFeatureReply(t *testing.T) {
 func TestPhysicalMonitor_SetBrightness(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	minValue, origin, maxValue, err := m.GetBrightness()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("minValue = %v, origin = %v, maxValue = %v", minValue, origin, maxValue)
 	defer t.Run(fmt.Sprintf("Recover Origin Brightness %d", origin), func(t *testing.T) {
 		err := m.SetVCPFeature(vcp.Brightness.Value(origin))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 
 	type args struct {
@@ -155,7 +156,7 @@ func TestPhysicalMonitor_SetBrightness(t *testing.T) {
 			for value := minValue; value <= maxValue; value += (maxValue - minValue) / 10 {
 				t.Run(strconv.Itoa(value), func(t *testing.T) {
 					err := tt.args.f(m, value)
-					assert.Nil(t, err)
+					require.NoError(t, err)
 				})
 
 				time.Sleep(time.Second)
@@ -167,12 +168,12 @@ func TestPhysicalMonitor_SetBrightness(t *testing.T) {
 func TestPhysicalMonitor_SetContrast(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	minValue, origin, maxValue, err := m.GetContrast()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("minValue = %v, origin = %v, maxValue = %v", minValue, origin, maxValue)
 	defer t.Run(fmt.Sprintf("Recover Origin Contrast %d", origin), func(t *testing.T) {
 		err := m.SetVCPFeature(vcp.Contrast.Value(origin))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 
 	type args struct {
@@ -208,7 +209,7 @@ func TestPhysicalMonitor_SetContrast(t *testing.T) {
 			for value := minValue; value <= maxValue; value += (maxValue - minValue) / 10 {
 				t.Run(strconv.Itoa(value), func(t *testing.T) {
 					err := tt.args.f(m, value)
-					assert.Nil(t, err)
+					require.NoError(t, err)
 				})
 
 				time.Sleep(time.Second)
@@ -221,7 +222,7 @@ func TestPhysicalMonitor_RestoreMonitorFactoryColorDefaults(t *testing.T) {
 	t.Run("With HighLevel Api", func(t *testing.T) {
 		m := ddcci.PhysicalMonitor0()
 		err := m.RestoreFactoryColorDefaults()
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 
 	time.Sleep(time.Second)
@@ -229,7 +230,7 @@ func TestPhysicalMonitor_RestoreMonitorFactoryColorDefaults(t *testing.T) {
 	t.Run("With SetVCPFeature", func(t *testing.T) {
 		m := ddcci.PhysicalMonitor0()
 		err := m.SetVCPFeature(vcp.RestoreColorDefaults.Value(0))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 }
 
@@ -237,7 +238,7 @@ func TestPhysicalMonitor_RestoreMonitorFactoryDefaults(t *testing.T) {
 	t.Run("With HighLevel Api", func(t *testing.T) {
 		m := ddcci.PhysicalMonitor0()
 		err := m.RestoreFactoryDefaults()
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 
 	time.Sleep(time.Second)
@@ -245,7 +246,7 @@ func TestPhysicalMonitor_RestoreMonitorFactoryDefaults(t *testing.T) {
 	t.Run("With SetVCPFeature", func(t *testing.T) {
 		m := ddcci.PhysicalMonitor0()
 		err := m.SetVCPFeature(vcp.RestoreFactoryDefaults.Value(0))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 }
 
@@ -253,20 +254,20 @@ func TestPhysicalMonitor_AudioSpeakerVolume(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 
 	origin, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.AudioSpeakerVolume)
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	defer t.Run(fmt.Sprintf("Recover AudioSpeakerVolume %d", origin), func(t *testing.T) {
 		err := m.SetVCPFeature(vcp.AudioSpeakerVolume.Value(origin))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 	assert.Equal(t, 100, maxValue)
 
 	for value := 0; value <= 100; value += 10 {
 		t.Run(strconv.Itoa(value), func(t *testing.T) {
 			err := m.SetVCPFeature(vcp.AudioSpeakerVolume.Value(origin))
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			current, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.AudioSpeakerVolume)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, value, current)
 			assert.Equal(t, 100, maxValue)
 		})
@@ -277,20 +278,20 @@ func TestPhysicalMonitor_AudioMicrophoneVolume(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 
 	origin, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.AudioMicrophoneVolume)
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	defer t.Run(fmt.Sprintf("Recover AudioMicrophoneVolume %d", origin), func(t *testing.T) {
 		err := m.SetVCPFeature(vcp.AudioMicrophoneVolume.Value(origin))
-		assert.Nil(t, err)
+		require.NoError(t, err)
 	})
 	assert.Equal(t, 100, maxValue)
 
 	for value := 0; value <= 100; value += 10 {
 		t.Run(strconv.Itoa(value), func(t *testing.T) {
 			err = m.SetVCPFeature(vcp.AudioMicrophoneVolume.Value(origin))
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			current, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.AudioMicrophoneVolume)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 			assert.Equal(t, value, current)
 			assert.Equal(t, 100, maxValue)
 		})
@@ -301,7 +302,7 @@ func TestPhysicalMonitor_GetTimingReport(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 
 	report, err := m.GetTimingReport()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, report)
 
 	t.Logf("report = %+v", report)
@@ -310,13 +311,13 @@ func TestPhysicalMonitor_GetTimingReport(t *testing.T) {
 
 	{
 		current, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.HorizontalFrequency)
-		assert.Nil(t, err)
+		require.NoError(t, err)
 
 		t.Logf("current = %v, maxValue = %v", current, maxValue)
 	}
 	{
 		current, maxValue, err := m.GetVCPFeatureAndVCPFeatureReply(vcp.VerticalFrequency)
-		assert.Nil(t, err)
+		require.NoError(t, err)
 
 		t.Logf("current = %v, maxValue = %v", current, maxValue)
 	}
@@ -330,7 +331,7 @@ func TestPhysicalMonitor_VCPVersion(t *testing.T) {
 	// version := ""
 	//
 	// err := m.GetVCPFeature(vcp.Version, &version)
-	// assert.Nil(t, err)
+	// require.NoError(t, err)
 	//
 	// t.Logf("version = %+v", version)
 }
@@ -338,7 +339,7 @@ func TestPhysicalMonitor_VCPVersion(t *testing.T) {
 func TestPhysicalMonitor_CapabilitiesRequestAndCapabilitiesReply(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	data, err := m.CapabilitiesRequestAndCapabilitiesReply()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 	assert.NotNil(t, data)
 
 	t.Logf("capabilities = %s", data)
@@ -347,13 +348,13 @@ func TestPhysicalMonitor_CapabilitiesRequestAndCapabilitiesReply(t *testing.T) {
 func TestPhysicalMonitor_DegaussMonitor(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	err := m.Degauss()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 }
 
 func TestPhysicalMonitor_GetCapabilitiesStringLength(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	size, err := m.GetCapabilitiesStringLength()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("size = %d", size)
 }
@@ -361,7 +362,7 @@ func TestPhysicalMonitor_GetCapabilitiesStringLength(t *testing.T) {
 func TestPhysicalMonitor_GetCapabilities(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	capabilities, temperatures, err := m.GetCapabilities()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("capabilities = %v", capabilities)
 	t.Logf("temperatures = %v", temperatures)
@@ -370,7 +371,7 @@ func TestPhysicalMonitor_GetCapabilities(t *testing.T) {
 func TestPhysicalMonitor_GetColorTemperature(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	temperature, err := m.GetColorTemperature()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("temperature = %v", temperature)
 }
@@ -381,7 +382,7 @@ func TestPhysicalMonitor_GetDisplayAreaPosition(t *testing.T) {
 		t.Run(fmt.Sprintf("positionType: %v", positionType), func(t *testing.T) {
 			m := ddcci.PhysicalMonitor0()
 			minValue, current, maxValue, err := m.GetDisplayAreaPosition(positionType)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			t.Logf("minValue = %v, current = %v, maxValue = %v", minValue, current, maxValue)
 		})
@@ -394,7 +395,7 @@ func TestPhysicalMonitor_GetDisplayAreaSize(t *testing.T) {
 		t.Run(fmt.Sprintf("sizeType: %v", sizeType), func(t *testing.T) {
 			m := ddcci.PhysicalMonitor0()
 			minValue, current, maxValue, err := m.GetDisplayAreaSize(sizeType)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			t.Logf("minValue = %v, current = %v, maxValue = %v", minValue, current, maxValue)
 		})
@@ -407,7 +408,7 @@ func TestPhysicalMonitor_GetRedGreenOrBlueDrive(t *testing.T) {
 		t.Run(fmt.Sprintf("driveType: %v", driveType), func(t *testing.T) {
 			m := ddcci.PhysicalMonitor0()
 			minValue, current, maxValue, err := m.GetRedGreenOrBlueDrive(driveType)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			t.Logf("minValue = %v, current = %v, maxValue = %v", minValue, current, maxValue)
 		})
@@ -420,7 +421,7 @@ func TestPhysicalMonitor_GetRedGreenOrBlueGain(t *testing.T) {
 		t.Run(fmt.Sprintf("driveType: %v", driveType), func(t *testing.T) {
 			m := ddcci.PhysicalMonitor0()
 			minValue, current, maxValue, err := m.GetRedGreenOrBlueGain(driveType)
-			assert.Nil(t, err)
+			require.NoError(t, err)
 
 			t.Logf("minValue = %v, current = %v, maxValue = %v", minValue, current, maxValue)
 		})
@@ -430,7 +431,7 @@ func TestPhysicalMonitor_GetRedGreenOrBlueGain(t *testing.T) {
 func TestPhysicalMonitor_GetTechnologyType(t *testing.T) {
 	m := ddcci.PhysicalMonitor0()
 	value, err := m.GetTechnologyType()
-	assert.Nil(t, err)
+	require.NoError(t, err)
 
 	t.Logf("value = %v", value)
 }

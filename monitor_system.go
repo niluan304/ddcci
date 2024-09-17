@@ -13,7 +13,10 @@ import (
 const errno0 = syscall.Errno(0)
 
 // The RECT structure defines a rectangle by the coordinates of its upper-left and lower-right corners.
-// https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect
+//
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect
 type RECT struct {
 	Left   int32
 	Top    int32
@@ -22,7 +25,10 @@ type RECT struct {
 }
 
 // SystemMonitor
-// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc
+//
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nc-winuser-monitorenumproc
 type SystemMonitor struct {
 	user32 *syscall.DLL
 	dxva2  *syscall.DLL
@@ -69,7 +75,9 @@ type SystemMonitor struct {
 //
 // A value of type MONITORENUMPROC is a pointer to a MonitorEnumProc function.
 //
-// https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaymonitors
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-enumdisplaymonitors
 func NewSystemMonitors() ([]SystemMonitor, error) {
 	user32, err := syscall.LoadDLL("user32.dll")
 	if err != nil {
@@ -86,7 +94,7 @@ func NewSystemMonitors() ([]SystemMonitor, error) {
 	}
 
 	var monitors []SystemMonitor
-	callback := func(hMonitor syscall.Handle, hdc syscall.Handle, rect *RECT, data uintptr) uintptr {
+	callback := func(hMonitor, hdc syscall.Handle, rect *RECT, data uintptr) uintptr {
 		monitors = append(monitors, SystemMonitor{
 			user32:   user32,
 			dxva2:    dxva2,

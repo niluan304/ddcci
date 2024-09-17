@@ -15,7 +15,9 @@ import (
 // PhysicalMonitor
 // Contains a handle and text description corresponding to a physical monitor.
 //
-// https://learn.microsoft.com/en-us/windows/win32/api/physicalmonitorenumerationapi/ns-physicalmonitorenumerationapi-physical_monitor
+// See [microsoft-windows doc]
+//
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/physicalmonitorenumerationapi/ns-physicalmonitorenumerationapi-physical_monitor
 type PhysicalMonitor struct {
 	dxva2 *syscall.DLL
 
@@ -118,7 +120,7 @@ func (m *PhysicalMonitor) call(name string, args ...uintptr) error {
 // If vcpCode specifies a continuous VCP code, this parameter receives the maximum value of the VCP code.
 // If vcpCode specifies a non-continuous VCP code, the value received in this parameter is undefined.
 // This parameter can be NULL.
-func (m *PhysicalMonitor) GetVCPFeatureAndVCPFeatureReply(coder vcp.Coder) (current int, maxValue int, err error) {
+func (m *PhysicalMonitor) GetVCPFeatureAndVCPFeatureReply(coder vcp.Coder) (current, maxValue int, err error) {
 	// type vcpCodeType int
 	// const (
 	//	// Momentary VCP code. Sending a command of this type causes the monitor to initiate a self-timed operation
@@ -389,7 +391,7 @@ func (m *PhysicalMonitor) GetTechnologyType() (value int, err error) {
 	return
 }
 
-// DegaussMonitor
+// Degauss
 // Degausses a monitor.
 // Degaussing improves a monitor's image quality and color fidelity by demagnetizing the monitor.
 func (m *PhysicalMonitor) Degauss() error {
@@ -514,34 +516,42 @@ func (m *PhysicalMonitor) CapabilitiesRequestAndCapabilitiesReply() (info string
 // Contains information from a monitor's timing report.
 type TimingReport struct {
 	// The monitor's horizontal synchronization frequency in Hz.
-	HorizontalFrequency uint16
+	HorizontalFrequency uint32
 
 	// The monitor's vertical synchronization frequency in Hz.
-	VerticalFrequency uint16
+	VerticalFrequency uint32
 
 	// Timing status byte.
 	// For more information about this value,
 	// see the Display Data Channel Command Interface (DDC/CI) standard.
+	//
+	// 4.7 Get Timing Report & Timing Message
+	//  Bit 7 = 1 Sync.Freq. out of range
+	//  Bit 6 = 1 Unstable count
+	//  Bit 5-2 Reserved, shall be set to 0
+	//  Bit 1 = 1 Positive Horizontal sync polarity
+	//  Bit 1 = 0 Negative Horizontal sync polarity
+	//  Bit 0 = 1 Positive Vertical sync polarity
+	//  Bit 0 = 0 Negative Vertical sync polarity
 	TimingStatus byte
 }
 
-// todo data exception
 // GetTimingReport
 // Retrieves a monitor's horizontal and vertical synchronization frequencies.
 //
 // [out] pmtrMonitorTimingReport
 // Pointer to an TimingReport structure that receives the timing information.
 func (m *PhysicalMonitor) GetTimingReport() (*TimingReport, error) {
-	meta := new(TimingReport)
+	report := new(TimingReport)
 
 	err := m.call(GetTimingReport,
-		uintptr(unsafe.Pointer(meta)),
+		uintptr(unsafe.Pointer(report)),
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	return meta, nil
+	return report, nil
 }
 
 // SaveCurrentSettings
