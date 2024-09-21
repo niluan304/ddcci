@@ -29,6 +29,12 @@ type PhysicalMonitor struct {
 	description string
 }
 
+// Description Text description of the physical monitor.
+// A physical monitor description is always an array of 128 characters.
+func (m *PhysicalMonitor) Description() string {
+	return m.description
+}
+
 // NewPhysicalMonitor
 // Retrieves the physical monitors associated with an HMONITOR monitor handle.
 //

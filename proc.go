@@ -31,10 +31,10 @@ const (
 	SaveCurrentMonitorSettings         = "SaveCurrentMonitorSettings"
 )
 
-// See microsoft-windows [doc]
+// See [microsoft-windows doc]
 // Set Monitor With HighLevel
 //
-// [doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 const (
 	SetMonitorBrightness = "SetMonitorBrightness"
 	SetMonitorContrast   = "SetMonitorContrast"
@@ -42,7 +42,7 @@ const (
 
 // Set Monitor With HighLevel
 //
-// See microsoft-windows [doc]
+// See [microsoft-windows doc]
 //
 // Deprecated:
 // cannot use preset values because Golang does not support the 'enum' type.
@@ -51,7 +51,7 @@ const (
 // compared to *PhysicalMonitor .call(SetMonitorColorTemperature, 4000K),
 // it is better: *PhysicalMonitor.SetVCPFeature(vcp.SelectColorPreset.Set4000K)
 //
-// [doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
+// [microsoft-windows doc]: https://learn.microsoft.com/en-us/windows/win32/api/highlevelmonitorconfigurationapi/
 const (
 	SetMonitorColorTemperature    = "SetMonitorColorTemperature"
 	SetMonitorDisplayAreaPosition = "SetMonitorDisplayAreaPosition"
